@@ -11,19 +11,24 @@ router.get("/balance", authMiddleware, async (req, res) => {
 
 router.post("/transfer", authMiddleware, async (req, res) => {
   const session = await mongoose.startSession();
-
-  session.startTransaction();
   const { amount, to } = req.body;
-  const fromaccount = Account.findOne({ userId: req.UserId }).session(session);
+  session.startTransaction();
+  const fromaccount = await Account.findOne({ userId: req.userId }).session(
+    session
+  );
+  const toaccount = await Account.findOne({ userId: to }).session(session);
 
-  if (!fromaccount || fromaccount.balance < amount) {
+  if (!fromaccount) {
+    await session.abortTransaction();
+    return res.status(404).json({ err: "Invalid account" });
+  }
+  if (fromaccount.balance < amount) {
     await session.abortTransaction();
     return res.status(400).json({
       message: "Insufficient balance",
     });
   }
 
-  const toaccount = Account.findOne({ userId: to }).session(session);
   if (!toaccount) {
     await session.abortTransaction();
     return res.status(400).json({
@@ -41,7 +46,7 @@ router.post("/transfer", authMiddleware, async (req, res) => {
   ).session(session);
 
   await session.commitTransaction();
-  session.endSession();
+  await session.endSession();
   res.json({
     message: "Transfer successful",
   });
