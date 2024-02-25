@@ -33,13 +33,18 @@ export default function Signup() {
   };
 
   return (
-    <div className="min-h-screen flex justify-center items-center bg-gray-100">
+    <div className="min-h-screen flex justify-center items-center bg-gradient-to-r from-purple-600 to-indigo-700">
       <div className="bg-white p-8 rounded shadow-md w-96">
         <form onSubmit={handleSubmit(onSubmit)}>
+          <div>
+            <h1 className="mb-8 flex justify-center text-2xl font-medium  text-gray-900">
+              Sign up
+            </h1>
+          </div>
           <div className="mb-4">
             <label
               htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-lg font-medium  text-gray-700"
             >
               Email
             </label>
@@ -48,7 +53,7 @@ export default function Signup() {
               type="text"
               id="email"
               placeholder="Enter your email"
-              className="block w-full px-4 py-2 mt-1 rounded-md border border-gray-300 focus:border-indigo-500 focus:outline-none focus:ring focus:ring-indigo-200"
+              className="block text-md w-full px-4 py-3 mt-1 rounded-md border border-gray-300 focus:border-indigo-500 focus:outline-none focus:ring focus:ring-indigo-200"
             />
             {errors.email && (
               <div className="text-red-500">{errors.email.message}</div>
@@ -57,7 +62,7 @@ export default function Signup() {
           <div className="mb-4">
             <label
               htmlFor="password"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-lg font-medium text-gray-700"
             >
               Password
             </label>
@@ -66,7 +71,7 @@ export default function Signup() {
               type="password"
               id="password"
               placeholder="Enter your password"
-              className="block w-full px-4 py-2 mt-1 rounded-md border border-gray-300 focus:border-indigo-500 focus:outline-none focus:ring focus:ring-indigo-200"
+              className="block text-md w-full px-4 py-3 mt-1 rounded-md border border-gray-300 focus:border-indigo-500 focus:outline-none focus:ring focus:ring-indigo-200"
             />
             {errors.password && (
               <div className="text-red-500">{errors.password.message}</div>
@@ -75,7 +80,7 @@ export default function Signup() {
           <button
             disabled={isSubmitting}
             type="submit"
-            className="block w-full px-4 py-2 mt-4 text-white bg-indigo-500 rounded-md hover:bg-indigo-600 focus:outline-none focus:ring focus:ring-indigo-200"
+            className="block w-full px-4 py-2 mt-10 text-white bg-indigo-500 rounded-md hover:bg-indigo-600 focus:outline-none focus:ring focus:ring-indigo-200"
           >
             {isSubmitting ? "Loading..." : "Submit"}
           </button>
