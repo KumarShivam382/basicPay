@@ -1,11 +1,16 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { Link } from "react-router-dom";
 
 const schema = z.object({
-  email: z.string().email(),
+  firstname: z.string().min(1, {
+    message: "* First name is required",
+  }),
+  lastname: z.string(),
+  username: z.string().email(),
   password: z.string().min(8, {
-    message: "Password must be at least 8 characters long",
+    message: "* Password must be at least 8 characters long",
   }),
 });
 
@@ -23,7 +28,7 @@ export default function Signup() {
   const onSubmit = async (data) => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000));
-      throw new Error();
+      // throw new Error();
       console.log(data);
     } catch (error) {
       setError("root", {
@@ -43,20 +48,56 @@ export default function Signup() {
           </div>
           <div className="mb-4">
             <label
-              htmlFor="email"
+              htmlFor="firstname"
+              className="block text-lg font-medium  text-gray-700"
+            >
+              First Name
+            </label>
+            <input
+              {...register("firstname")}
+              type="text"
+              id="firstname"
+              placeholder="Enter your First name"
+              className="block text-md w-full px-4 py-3 mt-1 rounded-md border border-gray-300 focus:border-indigo-500 focus:outline-none focus:ring focus:ring-indigo-200"
+            />
+            {errors.firstname && (
+              <div className="text-red-500">{errors.firstname.message}</div>
+            )}
+          </div>
+          <div className="mb-4">
+            <label
+              htmlFor="lastname"
+              className="block text-lg font-medium  text-gray-700"
+            >
+              Last Name
+            </label>
+            <input
+              {...register("lastname")}
+              type="text"
+              id="lastname"
+              placeholder="Enter your Last name"
+              className="block text-md w-full px-4 py-3 mt-1 rounded-md border border-gray-300 focus:border-indigo-500 focus:outline-none focus:ring focus:ring-indigo-200"
+            />
+            {errors.lastname && (
+              <div className="text-red-500">{errors.lastname.message}</div>
+            )}
+          </div>
+          <div className="mb-4">
+            <label
+              htmlFor="username"
               className="block text-lg font-medium  text-gray-700"
             >
               Email
             </label>
             <input
-              {...register("email")}
+              {...register("username")}
               type="text"
-              id="email"
+              id="username"
               placeholder="Enter your email"
               className="block text-md w-full px-4 py-3 mt-1 rounded-md border border-gray-300 focus:border-indigo-500 focus:outline-none focus:ring focus:ring-indigo-200"
             />
-            {errors.email && (
-              <div className="text-red-500">{errors.email.message}</div>
+            {errors.username && (
+              <div className="text-red-500">{errors.username.message}</div>
             )}
           </div>
           <div className="mb-4">
@@ -87,6 +128,15 @@ export default function Signup() {
           {errors.root && (
             <div className="text-red-500">{errors.root.message}</div>
           )}
+
+          <div className="mb-4 mt-1">
+            <p className="text-m">
+              Already have an account?{" "}
+              <Link to="/Signin" className="text-blue-500 hover:underline">
+                Login
+              </Link>
+            </p>
+          </div>
         </form>
       </div>
     </div>
