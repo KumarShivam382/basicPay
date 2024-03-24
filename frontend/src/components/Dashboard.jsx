@@ -1,5 +1,13 @@
-import React from "react";
+import { Appbar } from "./ui/Appbar";
+import { Balance } from "./ui/Balance";
+import { Users } from "./ui/Users";
 
 export default function Dashboard() {
-  return <div>Dashboard</div>;
+  return (
+    <div>
+      <Appbar />
+      <Balance />
+      <Users />
+    </div>
+  );
 }
